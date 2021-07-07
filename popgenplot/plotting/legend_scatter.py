@@ -26,7 +26,7 @@ def legend_scatter_HO():
 				  x_axis_location=None,
 				  y_axis_location=None,
 				  sizing_mode='stretch_both',
-				  title="Scatter")
+				  title="GCAE")
 
 	plot.background_fill_color = "#fafafa"
 
