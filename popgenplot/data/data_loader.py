@@ -136,7 +136,7 @@ def get_coords_final(model):
 	if model == "TSNE":
 		projected_coords = read_h5(TSNE_FINAL, "coords")
 	if model == "GCAE":
-		projected_coords = read_h5(GCAE_FINAL, "180_encoded_train")
+		projected_coords = read_h5(GCAE_FINAL, "310_encoded_train")
 
 
 	ind_pop_list = get_ind_pop_list(FAMFILE)
