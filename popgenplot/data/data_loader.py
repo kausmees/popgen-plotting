@@ -8,8 +8,9 @@ STYLEFILE = "{0}/styles_HumanOrigins2067_filtered".format(DATA_PATH)
 FAMFILE = "{0}/HumanOrigins2067_filtered".format(DATA_PATH)
 SUPERPOPS_FILE = "{0}/HO_superpopulations".format(DATA_PATH)
 
-UMAP_FINAL = "{0}umap.HumanOrigins2067_filtered.UMAP_N05_M05_S06.standard.flip_False.missing_val_-1.0.h5".format(DATA_PATH)
-TSNE_FINAL = "{0}tsne.HumanOrigins2067_filtered.TSNE_L08_P02.standard.flip_False.missing_val_-1.0.h5".format(DATA_PATH)
+PCA_FINAL = "{0}pca.HumanOrigins2067_filtered.smartPCAstyle.flip_False.missing_val_-1.0.h5".format(DATA_PATH)
+UMAP_FINAL = "{0}umap.HumanOrigins2067_filtered.UMAP_N01_M01_S03.standard.flip_False.missing_val_-1.0.h5".format(DATA_PATH)
+TSNE_FINAL = "{0}tsne.HumanOrigins2067_filtered.TSNE_L06_P02.standard.flip_False.missing_val_-1.0.h5".format(DATA_PATH)
 GCAE_FINAL = "{0}encoded_data.h5".format(DATA_PATH)
 
 def read_h5(filename, dataname):
@@ -131,6 +132,8 @@ def get_coords_final(model):
 
 	:return: dict mapping pop IDs => list of coordinates for the samples of that pop
 	'''
+	if model == "PCA":
+		projected_coords = read_h5(PCA_FINAL, "scores")
 	if model == "UMAP":
 		projected_coords = read_h5(UMAP_FINAL, "coords")
 	if model == "TSNE":
