@@ -9,6 +9,7 @@ FAMFILE = "{0}/HumanOrigins2067_filtered".format(DATA_PATH)
 SUPERPOPS_FILE = "{0}/HO_superpopulations".format(DATA_PATH)
 
 PCA_FINAL = "{0}pca.HumanOrigins2067_filtered.smartPCAstyle.flip_False.missing_val_-1.0.h5".format(DATA_PATH)
+POPVAE_FINAL = "/home/kristiina/Projects/popvae/out/P4/HumanOrigins2067_filtered.2.3.32.32_training_preds.txt"
 UMAP_FINAL = "{0}umap.HumanOrigins2067_filtered.UMAP_N01_M01_S03.standard.flip_False.missing_val_-1.0.h5".format(DATA_PATH)
 TSNE_FINAL = "{0}tsne.HumanOrigins2067_filtered.TSNE_L06_P02.standard.flip_False.missing_val_-1.0.h5".format(DATA_PATH)
 GCAE_FINAL = "{0}encoded_data.h5".format(DATA_PATH)
@@ -28,6 +29,37 @@ def read_h5(filename, dataname):
 			# strange syntax to read a scalar value
 			data = hf[dataname][()]
 	return data
+
+def read_popvae(filename, epoch):
+	'''
+	Read 2D latent coords from a popvae training preds file, for the given epoch.
+	Assumes the data set is HumanOrigins2067_filtered
+
+	:param filename: directory and filename of file to read from
+	:param epoch: epoch to get data for
+	:return latent coords
+	'''
+	ndim=2
+	latent_coords = []
+	ind_pop_list_check = []
+
+	with open(filename) as pfile:
+		pfile.readline()
+
+		lines_epoch = pfile.readlines()[epoch*2067:epoch*2067+2067]
+
+
+		for l in lines_epoch:
+			items = l.split()
+
+			means = []
+			for i in range(ndim):
+				means.append(float(items[i]))
+			# id = items[ndim]
+			latent_coords.append(means)
+			# ind_pop_list_check.append(id)
+	return np.array(latent_coords)
+
 
 def get_ind_pop_list(filestart):
 	'''
@@ -134,6 +166,8 @@ def get_coords_final(model):
 	'''
 	if model == "PCA":
 		projected_coords = read_h5(PCA_FINAL, "scores")
+	if model == "popvae":
+		projected_coords = read_popvae(POPVAE_FINAL, 330)
 	if model == "UMAP":
 		projected_coords = read_h5(UMAP_FINAL, "coords")
 	if model == "TSNE":

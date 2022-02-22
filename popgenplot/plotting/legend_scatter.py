@@ -23,6 +23,10 @@ def legend_scatter_HO(model="GCAE"):
 		xlabel = "PC2"
 		ylabel = "PC1"
 
+	elif model == "popvae":
+		xlabel = "D1"
+		ylabel = "D2"
+
 	else:
 		xlabel = "D2"
 		ylabel = "D1"
@@ -52,8 +56,15 @@ def legend_scatter_HO(model="GCAE"):
 
 		for pop in superpop_dict[spop]:
 			coords = coords_by_pop[pop]
-			x = coords[:,1]
-			y = coords[:,0]
+
+			if (model == "popvae"):
+				x = coords[:,0]
+				y = coords[:,1]
+
+			else:
+				x = coords[:,1]
+				y = coords[:,0]
+
 			style = style_dict[pop]
 			r = plot.scatter(x, y,
 							 size=10,
@@ -107,8 +118,9 @@ def legend_scatter_HO(model="GCAE"):
 	# plot.xaxis.axis_label = xlabel
 	# plot.yaxis.axis_label = ylabel
 
-	if (model == "PCA" or model == "GCAE"):
+	if (model == "PCA" or model == "GCAE" or model == "popvae"):
 		plot.y_range.flipped = True
+
 
 	final = row(plot,
 				column([spop_figs[spop] for spop in ["Sub-Saharan Africa", "Americas"]]),
