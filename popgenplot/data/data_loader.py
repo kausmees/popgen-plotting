@@ -9,7 +9,7 @@ FAMFILE = "{0}/HumanOrigins2067_filtered".format(DATA_PATH)
 SUPERPOPS_FILE = "{0}/HO_superpopulations".format(DATA_PATH)
 
 PCA_FINAL = "{0}pca.HumanOrigins2067_filtered.smartPCAstyle.flip_False.missing_val_-1.0.h5".format(DATA_PATH)
-POPVAE_FINAL = "/home/kristiina/Projects/popvae/out/P4/HumanOrigins2067_filtered.2.3.32.32_training_preds.txt"
+POPVAE_FINAL = "{0}HumanOrigins2067_filtered.2.3.32.32_training_preds.txt".format(DATA_PATH)
 UMAP_FINAL = "{0}umap.HumanOrigins2067_filtered.UMAP_N01_M01_S03.standard.flip_False.missing_val_-1.0.h5".format(DATA_PATH)
 TSNE_FINAL = "{0}tsne.HumanOrigins2067_filtered.TSNE_L06_P02.standard.flip_False.missing_val_-1.0.h5".format(DATA_PATH)
 GCAE_FINAL = "{0}encoded_data.h5".format(DATA_PATH)
