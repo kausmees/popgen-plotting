@@ -18,7 +18,6 @@ def legend_scatter_HO(model="GCAE"):
 	spops = ["Sub-Saharan Africa",  "Americas", "Oceania", "Middle East", "East Asia", "North Asia", "Europe", "Central/South Asia"]
 
 	TOOLS="pan,wheel_zoom,reset"
-
 	if model == "PCA":
 		xlabel = "PC2"
 		ylabel = "PC1"
@@ -39,7 +38,7 @@ def legend_scatter_HO(model="GCAE"):
 				  toolbar_location="above",
 				  # x_axis_location=None,
 				  # y_axis_location=None,
-				  sizing_mode='stretch_both',
+				  # sizing_mode='stretch_both',
 				  title=model)
 
 	plot.background_fill_color = "#fafafa"
