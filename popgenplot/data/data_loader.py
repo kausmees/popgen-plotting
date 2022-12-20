@@ -14,6 +14,10 @@ UMAP_FINAL = "{0}umap.HumanOrigins2067_filtered.UMAP_N01_M01_S03.standard.flip_F
 TSNE_FINAL = "{0}tsne.HumanOrigins2067_filtered.TSNE_L06_P02.standard.flip_False.missing_val_-1.0.h5".format(DATA_PATH)
 GCAE_FINAL = "{0}encoded_data.h5".format(DATA_PATH)
 
+UMAP_HPARAMS_FPATH = "{}umap_out/umap.HumanOrigins2067_filtered.UMAP_N{}_M{}_S{}.standard.flip_False.missing_val_-1.0.h5"
+TSNE_HPARAMS_FPATH = "{}tsne_out/tsne.HumanOrigins2067_filtered.TSNE_L{}_P{}.standard.flip_False.missing_val_-1.0.h5"
+ISOMAP_HPARAMS_FPATH = "{}isomap_out/isomap.HumanOrigins2067_filtered.ISOMAP_N{}_P{}.standard.flip_False.missing_val_-1.0.h5"
+
 def read_h5(filename, dataname):
 	'''
 	Read data from a h5 file.
@@ -160,7 +164,7 @@ def get_coords_by_pop(coords, ind_pop_list):
 
 def get_coords_final(model):
 	'''
-	Get coordinates of the final
+	Get coordinates of the samples for the version of the model that was presented in the paper.
 
 	:return: dict mapping pop IDs => list of coordinates for the samples of that pop
 	'''
@@ -172,6 +176,63 @@ def get_coords_final(model):
 		projected_coords = read_h5(UMAP_FINAL, "coords")
 	if model == "TSNE":
 		projected_coords = read_h5(TSNE_FINAL, "coords")
+	if model == "GCAE":
+		projected_coords = read_h5(GCAE_FINAL, "370_encoded_train")
+
+
+	ind_pop_list = get_ind_pop_list(FAMFILE)
+	coords_by_pop = get_coords_by_pop(projected_coords, ind_pop_list)
+	return coords_by_pop
+
+def get_coords_by_hyperparam(model, p1_val, p2_val, p3_val):
+	'''
+	Get coordinates of the samples for the speciefied model and hyperparameter values.
+
+	:return: dict mapping pop IDs => list of coordinates for the samples of that pop
+	'''
+	if model == "PCA":
+		projected_coords = read_h5(PCA_FINAL, "scores")
+	if model == "popvae":
+		projected_coords = read_popvae(POPVAE_FINAL, 330)
+	if model == "UMAP":
+		N_vals = [3, 5, 10, 20, 50, 100, 200]
+		# N_num = str(N_vals.index(p1_val)+1).zfill(2)
+		N_num = str(p1_val).zfill(2)
+
+		M_vals = [0.05, 0.1, 0.25, 0.5, 0.75, 1.0]
+		# M_num = str(M_vals.index(p2_val)+1).zfill(2)
+		M_num = str(p2_val).zfill(2)
+
+		S_vals = [0.05, 0.1, 0.25, 0.5, 0.75, 1.0]
+		# S_num = str(S_vals.index(p3_val)+1).zfill(2)
+		S_num = str(p3_val).zfill(2)
+
+		filename = UMAP_HPARAMS_FPATH.format(DATA_PATH, N_num, M_num, S_num)
+		projected_coords = read_h5(filename, "coords")
+	if model == "TSNE":
+		L_vals = [43, 170, 200, 225, 250, 300, 350, 400, 450, 500, 650, 600]
+		# L_num = str(L_vals.index(p1_val)+1).zfill(2)
+		L_num = str(p1_val).zfill(2)
+
+		P_vals = [5, 10, 20, 30, 45, 50, 75, 100, 125, 175, 200]
+		# P_num = str(P_vals.index(p2_val)+1).zfill(2)
+		P_num = str(p2_val).zfill(2)
+
+		filename = TSNE_HPARAMS_FPATH.format(DATA_PATH, L_num, P_num)
+		projected_coords = read_h5(filename, "coords")
+
+	if model == "ISOMAP":
+		N_vals = [1, 2, 3, 4, 5 ,6 ,7 ,8, 9 ,10, 11]
+		# N_num = str(N_vals.index(p1_val)+1).zfill(2)
+		N_num = str(p1_val).zfill(2)
+
+		P_vals = [1, 2, 3]
+		# P_num = str(P_vals.index(p2_val)+1).zfill(2)
+		P_num = str(p2_val).zfill(2)
+
+		filename = ISOMAP_HPARAMS_FPATH.format(DATA_PATH, N_num, P_num)
+		projected_coords = read_h5(filename, "coords")
+
 	if model == "GCAE":
 		projected_coords = read_h5(GCAE_FINAL, "370_encoded_train")
 

@@ -17,7 +17,7 @@ def legend_scatter_HO(model="GCAE"):
 
 	spops = ["Sub-Saharan Africa",  "Americas", "Oceania", "Middle East", "East Asia", "North Asia", "Europe", "Central/South Asia"]
 
-	TOOLS="pan,wheel_zoom,reset"
+	TOOLS="pan,wheel_zoom,box_zoom,save,reset"
 	if model == "PCA":
 		xlabel = "PC2"
 		ylabel = "PC1"
@@ -36,8 +36,8 @@ def legend_scatter_HO(model="GCAE"):
 				  x_axis_label=xlabel,
 				  y_axis_label=ylabel,
 				  toolbar_location="above",
-				  # x_axis_location=None,
-				  # y_axis_location=None,
+				  x_axis_location=None,
+				  y_axis_location=None,
 				  # sizing_mode='stretch_both',
 				  title=model)
 
@@ -71,6 +71,7 @@ def legend_scatter_HO(model="GCAE"):
 							 color=style[1],
 							 alpha=1.0,
 							 line_color=style[2],
+							 line_width=0.4,
 							 muted_color="gray",
 							 muted_alpha=0.2)
 			pop_renderers[pop] = r
